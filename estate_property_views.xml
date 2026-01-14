@@ -1,0 +1,149 @@
+<odoo>
+
+    <!-- list-->
+    <record id="view_estate_property_list" model="ir.ui.view">
+        <field name="name">estate.property.list</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <list string="Properties">
+                <field name="name"/>
+                <field name="property_type_id"/>
+                <field name="tag_ids" widget="many2many_tags"/>
+                <field name="postcode"/>
+                <field name="date_availability"/>
+                <field name="expected_price"/>
+                <field name="selling_price"/>
+                <field name="state"/>
+                <field name="bedrooms"/>
+                <field name="living_area"/>
+                <field name="buyer_id"/>
+                <field name="salesperson_id"/>
+
+            </list>
+        </field>
+    </record>
+
+    <!-- form-->
+    <record id="view_estate_property_form" model="ir.ui.view">
+        <field name="name">estate.property.form</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <form string="Property">
+                <sheet>
+
+                    <!-- main property data -->
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="property_type_id"/>
+                            <field name="postcode"/>
+                            <field name="date_availability"/>
+                        </group>
+
+                        <group>
+                            <!-- expected price entered by the user -->
+                            <field name="expected_price"/>
+                            <field name="best_price"/>
+                            <field name="selling_price"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+
+                    <!-- multiple tabs -->
+                    <notebook>
+
+                        <!-- Description  -->
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+
+                        <!-- Property details -->
+                        <page string="Details">
+                            <group>
+                                <field name="bedrooms"/>
+                                <field name="living_area"/>
+                                <field name="facades"/>
+                                <field name="garage"/>
+                                <field name="garden"/>
+
+                                <!-- Garden fields affected by onchange -->
+                                <field name="garden_area"/>
+                                <field name="garden_orientation"/>
+                                <field name="total_area"/>
+                            </group>
+                        </page>
+
+                        <!-- Tags  -->
+                        <page string="Tags">
+                            <field name="tag_ids" widget="many2many_tags"/>
+                        </page>
+
+                        <!-- sales  -->
+                        <page string="Sales">
+                            <group>
+                                <field name="buyer_id"/>
+                                <field name="salesperson_id"/>
+                            </group>
+                        </page>
+
+                        <!-- Offers tab -->
+                        <!-- one2many relationship with estate.property.offer -->
+                        <page string="Offers">
+                            <field name="offer_ids">
+                                <!-- editable list to add offers directly -->
+                                <list editable="bottom">
+                                    <field name="price"/>
+                                    <field name="partner_id"/>
+
+                                    <!-- validity in days (default = 7) -->
+                                    <field name="validity"/>
+
+                                    <!-- Computed date using inverse method -->
+                                    <field name="date_deadline"/>
+
+                                    <field name="status"/>
+                                </list>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- search -->
+    <record id="view_estate_property_search" model="ir.ui.view">
+        <field name="name">estate.property.search</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <search string="Properties">
+                <field name="name"/>
+                <field name="property_type_id"/>
+                <field name="postcode"/>
+                <field name="state"/>
+                <!-- filter for available properties -->
+                <filter name="available_properties" 
+                        string="Available"
+                        domain="[('state','in',['New','Offer Received'])]"/>
+                <!-- group by postcode -->
+                <filter name="group_by_postcode" 
+                        string="Postcode" 
+                         context="{'group_by':'postcode'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- action -->
+    <record id="action_estate_property" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+<menuitem id="menu_estate_root" name="Real Estate"/>
+    <menuitem id="menu_estate_advertisements" 
+            name="Advertisements" 
+            parent="menu_estate_root"
+            action="action_estate_property"/>
+</odoo>
