@@ -1,0 +1,14 @@
+<odoo>
+    <!-- Root menu -->
+    <menuitem 
+    id="estate_menu_root" 
+    name="Real Estate" 
+    sequence="10"/>
+
+    <!-- Properties menu under root -->
+    <menuitem id="estate_menu_properties" 
+    name="Properties" 
+    parent="estate_menu_root" 
+    sequence="1"
+    action="action_estate_property"/>
+</odoo>
