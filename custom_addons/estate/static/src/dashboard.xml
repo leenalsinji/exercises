@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="estate.EstateDashboard" owl="1">
+        <Layout className="'o_dashboard h-100'" display="display">
+            <t t-set-slot="control-panel-buttons">
+                <button class="btn btn-primary" t-on-click="openProperties">View All Properties</button>
+                <button class="btn btn-secondary ms-1" t-on-click="openOffers">Recent Offers</button>
+                <button class="btn btn-light ms-1" t-on-click="refreshStatistics">
+                    <i class="fa fa-refresh me-1"/> Refresh
+                </button>
+            </t>
+            
+            <div class="p-3">
+                <h2 class="mb-4">Real Estate Overview</h2>
+                <div class="d-flex flex-wrap" t-if="stats.isLoaded">
+                    <t t-foreach="items" t-as="item" t-key="item.description">
+                        <DashboardItem size="item.size || 1">
+                            <t t-set="p" t-value="item.props(stats)"/>
+                            <h4 class="text-muted"><t t-out="p.title"/></h4>
+                            <div t-attf-class="display-4 {{ p.color }}">
+                                <t t-out="p.value"/>
+                            </div>
+                        </DashboardItem>
+                    </t>
+                </div>
+                <div t-else="" class="text-center p-5">
+                    <i class="fa fa-circle-o-notch fa-spin fa-3x text-muted"/>
+                    <p class="mt-2">Fetching property data...</p>
+                </div>
+            </div>
+        </Layout>
+    </t>
+</templates>

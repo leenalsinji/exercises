@@ -1,0 +1,31 @@
+<t t-name="estate.TodoList" owl="1">
+    <div class="p-3 bg-light border">
+
+        <div class="d-flex flex-wrap mb-3">
+            <DashboardCard title="'Property Task Stats'">
+                <p class="mb-0">
+                    Tasks remaining:
+                    <t t-esc="remainingTodos()"/>
+                </p>
+            </DashboardCard>
+        </div>
+
+        <div class="mb-3 w-50">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Add a property task (e.g. Schedule inspection)"
+                   t-ref="todoInput"
+                   t-on-keyup="addTodo"/>
+        </div>
+
+        <div class="todo-list mb-4">
+            <t t-foreach="state.todos" t-as="todo" t-key="todo.id">
+                <TodoItem
+                    todo="todo"
+                    toggleState="toggleTodo"
+                    removeTodo="removeTodo"/>
+            </t>
+        </div>
+
+    </div>
+</t>

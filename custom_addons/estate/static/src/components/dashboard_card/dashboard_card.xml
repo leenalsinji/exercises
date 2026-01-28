@@ -1,0 +1,6 @@
+<t t-name="estate.DashboardCard" owl="1">
+    <div class="o_dashboard_card shadow-sm border bg-white p-3 m-2 text-center" style="flex: 1 1 200px;">
+        <h5 class="text-muted" t-esc="props.title"/>
+        <div class="h2 font-weight-bold" t-esc="props.value"/>
+    </div>
+</t>
