@@ -7,5 +7,5 @@ class ResUsers(models.Model):
         "estate.property", 
         "salesperson_id", 
         string="Properties",
-        domain=[('state', 'in', ['new', 'offer_received'])]
+        domain=[("state", "in", ["new", "offer_received", "offer_accepted"])]
     )
